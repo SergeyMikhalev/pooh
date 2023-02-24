@@ -19,7 +19,7 @@ public class Req {
     }
 
     public static Req of(String content) {
-        String httpRequestType ;
+        String httpRequestType;
         String poohMode;
         String sourceName;
         String param = "";
