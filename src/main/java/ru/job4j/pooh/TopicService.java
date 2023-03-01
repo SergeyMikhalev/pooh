@@ -5,6 +5,9 @@ import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static ru.job4j.pooh.Req.GET;
+import static ru.job4j.pooh.Req.POST;
+
 public class TopicService implements Service {
     private final Map<String, ConcurrentHashMap<String, ConcurrentLinkedQueue<String>>> topic = new ConcurrentHashMap<>();
 
@@ -17,12 +20,12 @@ public class TopicService implements Service {
         String respText = null;
         String respStatus = "200";
 
-        if ("POST".equals(type)) {
+        if (POST.equals(type)) {
             var map = topic.get(name);
             if (!Objects.isNull(map)) {
                 map.forEach((key, value) -> value.add(param));
             }
-        } else if ("GET".equals(type)) {
+        } else if (GET.equals(type)) {
             topic.putIfAbsent(name, new ConcurrentHashMap<>());
             topic.get(name).putIfAbsent(param, new ConcurrentLinkedQueue<>());
             respText = topic.get(name).get(param).poll();

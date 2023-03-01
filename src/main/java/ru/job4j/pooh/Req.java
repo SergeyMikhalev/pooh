@@ -4,7 +4,13 @@ import java.util.Set;
 
 public class Req {
 
-    private final static Set<String> MODES = Set.of("queue", "topic");
+    public static final String QUEUE = "queue";
+    public static final String TOPIC = "topic";
+
+    public static final String POST = "POST";
+    public static final String GET = "GET";
+
+    private final static Set<String> MODES = Set.of(QUEUE, TOPIC);
 
     private final String httpRequestType;
     private final String poohMode;
@@ -33,10 +39,10 @@ public class Req {
             throw new IllegalArgumentException();
         }
         sourceName = modeAndName[2];
-        if ("POST".equals(httpRequestType)) {
+        if (POST.equals(httpRequestType)) {
             param = strings[7];
-        } else if ("GET".equals(httpRequestType)) {
-            if ("topic".equals(poohMode)) {
+        } else if (GET.equals(httpRequestType)) {
+            if (TOPIC.equals(poohMode)) {
                 param = modeAndName[3];
             }
         }
@@ -61,10 +67,10 @@ public class Req {
 
     private static String getHttpRequestType(String content) {
         String httpRequestType;
-        if (content.startsWith("POST ")) {
-            httpRequestType = "POST";
-        } else if (content.startsWith("GET ")) {
-            httpRequestType = "GET";
+        if (content.startsWith(POST + " ")) {
+            httpRequestType = POST;
+        } else if (content.startsWith(GET + " ")) {
+            httpRequestType = GET;
         } else {
             throw new IllegalArgumentException();
         }
